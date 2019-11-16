@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:title="작성"
-        android:id="@+id/itemAdd"/>
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:title="비율"
-        android:id="@+id/itemPercent"/>
+        android:id="@+id/itemPercent"
+        android:icon="@drawable/ic_toys_black"
+        app:showAsAction="always"/>
 
     <item
         android:title="랜덤"
-        android:id="@+id/itemRandom"/>
+        android:id="@+id/itemRandom"
+        android:icon="@drawable/ic_gavel_black_24dp"
+        app:showAsAction="always"/>
 </menu>

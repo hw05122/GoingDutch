@@ -44,12 +44,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right" />
+                android:gravity="right"
+                android:inputType="number"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
                 android:text="원"
                 android:textSize="17sp"
                 android:textStyle="bold" />

@@ -41,15 +41,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:id="@+id/etMoney"/>
+                android:id="@+id/etMoney"
+                android:inputType="number"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="원"
                 android:textStyle="bold"
-                android:textSize="17sp"
-                android:inputType="number"/>
+                android:textSize="17sp"/>
         </LinearLayout>
     </LinearLayout>
 

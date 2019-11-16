@@ -8,8 +8,8 @@
     android:orientation="vertical"
     android:gravity="center">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Intro"/>
+        android:src="@drawable/goingdutch"/>
 </LinearLayout>

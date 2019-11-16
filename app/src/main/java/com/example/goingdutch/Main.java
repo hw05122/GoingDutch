@@ -8,15 +8,30 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity implements View.OnClickListener{
     double initTime;
+    ImageButton ibAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ibAdd = (ImageButton)findViewById(R.id.ibAdd);
+        ibAdd.setOnClickListener(this);
+    }
+
+    public void onClick(View view) {
+        if(view == ibAdd){
+            Intent intent = new Intent(getApplicationContext(),Add.class);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
     @Override
@@ -32,12 +47,7 @@ public class Main extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.itemAdd){
-            Intent intent = new Intent(getApplicationContext(),Add.class);
-            startActivity(intent);
-            finish();
-        }
-        else if(id == R.id.itemPercent){
+        if(id == R.id.itemPercent){
             Intent intent = new Intent(getApplicationContext(),Percent.class);
             startActivity(intent);
             finish();

@@ -61,9 +61,11 @@
             <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_add"
+                android:src="@drawable/ic_add_circle_outline_black"
                 android:id="@+id/ibPerson"
-                android:onClick="onClick"/>
+                android:onClick="onClick"
+                android:background="#ffffff"
+                android:layout_marginRight="5dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -80,7 +82,7 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="결제내역"
@@ -89,9 +91,11 @@
             <ImageButton
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@android:drawable/ic_menu_add"
+                android:src="@drawable/ic_add_circle_outline_black"
                 android:id="@+id/ibAdd"
-                android:onClick="onClick"/>
+                android:background="@color/colorPrimary"
+                android:onClick="onClick"
+                android:layout_marginRight="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -109,14 +113,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/btnResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
             android:onClick="onClick"
             android:text="계산결과"/>
     </LinearLayout>

@@ -84,9 +84,15 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View view) {
         if (view == ibPerson) {
-            list = new ArrayList<String>();
-            list.add("나");
-            personList();
+            if (etPerson.getText().toString().isEmpty()||etPerson.getText().toString().equals(" ")) {
+                Toast.makeText(getApplicationContext(), "참여자를 입력하세요.", Toast.LENGTH_SHORT).show();
+
+            }else {
+                Toast.makeText(getApplicationContext(), "참여자를 추가하였습니다.", Toast.LENGTH_SHORT).show();
+                list = new ArrayList<String>();
+                list.add("나");
+                personList();
+            }
         } else if (view == ibAdd) {
             AlertDialog.Builder digAdd = new AlertDialog.Builder(Add.this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -122,11 +128,10 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     money = etMoney.getText().toString();
-
                     if (list.size() == 0) {
                         Toast.makeText(getApplicationContext(), "결제자를 입력하세요.", Toast.LENGTH_SHORT).show();
 
-                    } else if (money.isEmpty()) {
+                    }else if (money.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "금액을 입력하세요.", Toast.LENGTH_SHORT).show();
 
                     } else {
