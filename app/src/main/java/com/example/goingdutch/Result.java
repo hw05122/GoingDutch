@@ -7,27 +7,45 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class Result extends AppCompatActivity implements View.OnClickListener{
-    Button btnOk, btnCancel, btnShare;
+public class Result extends AppCompatActivity implements View.OnClickListener {
+    TextView tvResult;
+    Button btnOk, btnBack, btnShare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        btnOk = (Button)findViewById(R.id.btnOk);
+        tvResult = (TextView) findViewById(R.id.tvResult);
+        if (Add.content.size() == 0) {
+
+        } else {
+            result();
+        }
+
+        btnOk = (Button) findViewById(R.id.btnOk);
         btnOk.setOnClickListener(this);
-        btnCancel = (Button)findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(this);
-        btnShare = (Button)findViewById(R.id.btnShare);
+        btnBack = (Button) findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(this);
+        btnShare = (Button) findViewById(R.id.btnShare);
         btnShare.setOnClickListener(this);
+    }
+
+    public void result() {
+        int size = Add.content.size();
+        String str = "";
+        for (int i = 0; i < size; i++) {
+            str += Add.content.get(i) + "\n";
+        }
+        tvResult.setText(str);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            Intent intent = new Intent(getApplicationContext(),Add.class);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(getApplicationContext(), Add.class);
             startActivity(intent);
             finish();
         }
@@ -36,17 +54,15 @@ public class Result extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void onClick(View view) {
-        if(view == btnOk){
-            Intent intent = new Intent(getApplicationContext(),Main.class);
+        if (view == btnOk) {
+            Intent intent = new Intent(getApplicationContext(), Main.class);
             startActivity(intent);
             finish();
-        }
-        else if(view == btnCancel){
-            Intent intent = new Intent(getApplicationContext(),Add.class);
+        } else if (view == btnBack) {
+            Intent intent = new Intent(getApplicationContext(), Add.class);
             startActivity(intent);
             finish();
-        }
-        else if(view == btnShare){
+        } else if (view == btnShare) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain");
