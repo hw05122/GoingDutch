@@ -36,6 +36,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
     public static ArrayList<String> list, content;
     String sendPerson, money, attendString;
     ListView lvList;
+    public static int moneySelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,23 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
         ibAdd.setOnClickListener(this);
 
         lvList = (ListView) findViewById(R.id.lvList);
+
+        Spinner spMoney = (Spinner) findViewById(R.id.spMoney);
+        ArrayList<String> listMoney= new ArrayList<>();
+        listMoney.add("10원단위 올림"); listMoney.add("100원단위 올림"); listMoney.add("10원단위 내림"); listMoney.add("100원단위 내림");
+        ArrayAdapter<String>adapterMoney = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listMoney);
+        spMoney.setAdapter(adapterMoney);
+        spMoney.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                moneySelect = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         btnResult = (Button) findViewById(R.id.btnResult);
         btnResult.setOnClickListener(this);
