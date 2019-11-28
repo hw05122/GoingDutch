@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Result"></activity>
-        <activity android:name=".Add" />
+        <activity android:name=".Add"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".Random" />
         <activity android:name=".Percent" />
         <activity android:name=".Intro">

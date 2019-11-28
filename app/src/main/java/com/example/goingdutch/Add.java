@@ -1,5 +1,6 @@
 package com.example.goingdutch;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -59,9 +60,12 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
         lvList = (ListView) findViewById(R.id.lvList);
 
         Spinner spMoney = (Spinner) findViewById(R.id.spMoney);
-        ArrayList<String> listMoney= new ArrayList<>();
-        listMoney.add("10원단위 올림"); listMoney.add("100원단위 올림"); listMoney.add("10원단위 내림"); listMoney.add("100원단위 내림");
-        ArrayAdapter<String>adapterMoney = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listMoney);
+        ArrayList<String> listMoney = new ArrayList<>();
+        listMoney.add("10원단위 올림");
+        listMoney.add("100원단위 올림");
+        listMoney.add("10원단위 내림");
+        listMoney.add("100원단위 내림");
+        ArrayAdapter<String> adapterMoney = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listMoney);
         spMoney.setAdapter(adapterMoney);
         spMoney.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -102,10 +106,10 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View view) {
         if (view == ibPerson) {
-            if (etPerson.getText().toString().isEmpty()||etPerson.getText().toString().equals(" ")) {
+            if (etPerson.getText().toString().isEmpty() || etPerson.getText().toString().equals(" ")) {
                 Toast.makeText(getApplicationContext(), "참여자를 입력하세요.", Toast.LENGTH_SHORT).show();
 
-            }else {
+            } else {
                 Toast.makeText(getApplicationContext(), "참여자를 추가하였습니다.", Toast.LENGTH_SHORT).show();
                 list = new ArrayList<String>();
                 list.add("나");
@@ -149,7 +153,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
                     if (list.size() == 0) {
                         Toast.makeText(getApplicationContext(), "결제자를 입력하세요.", Toast.LENGTH_SHORT).show();
 
-                    }else if (money.isEmpty()) {
+                    } else if (money.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "금액을 입력하세요.", Toast.LENGTH_SHORT).show();
 
                     } else {
@@ -258,7 +262,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
 
                                             } else if (money.isEmpty()) {
                                                 Toast.makeText(getApplicationContext(), "금액을 입력하세요.", Toast.LENGTH_SHORT).show();
-                                            }else {
+                                            } else {
                                                 SparseBooleanArray checkedItems = lvAttend.getCheckedItemPositions();
                                                 attendString = "";
                                                 for (int i = 0; i < adapterAttend.getCount(); i++) {
@@ -269,9 +273,9 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
 
                                                 if (attendString.equals("")) {
                                                     Toast.makeText(getApplicationContext(), "참여자를 선택하세요.", Toast.LENGTH_SHORT).show();
-                                                }else {
+                                                } else {
                                                     money = etMoney.getText().toString();
-                                                    content.set(position,"결제자:" + sendPerson + "  금액:" + money + "  참여자:" + attendString);
+                                                    content.set(position, "결제자:" + sendPerson + "  금액:" + money + "  참여자:" + attendString);
 
                                                     lvList.clearChoices();
                                                     adapterList.notifyDataSetChanged();
@@ -306,10 +310,26 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
 
             digAdd.show();
         } else if (view == btnResult) {
+            Info info = new Info(etTitle.getText().toString(), etPerson.getText().toString(), content);
             Intent intent = new Intent(getApplicationContext(), Result.class);
-            startActivity(intent);
-            finish();
+            intent.putExtra("info", info);
+            startActivityForResult(intent, 10);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 10 && resultCode == RESULT_OK) {
+            Info info = (Info) data.getSerializableExtra("info");
+            etTitle.setText(info.getTitle());
+            etPerson.setText(info.getList());
+            content.clear();
+            for(int i=0;i<info.getContent().size();i++){
+                content.add(info.getContent().get(i));
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
