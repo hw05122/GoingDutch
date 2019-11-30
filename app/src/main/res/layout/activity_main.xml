@@ -11,7 +11,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/goingdutch"/>
 
     </LinearLayout>
 
@@ -19,8 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="right"
-        android:layout_margin="10dp">
+        android:gravity="right">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -28,7 +33,29 @@
             android:id="@+id/ibAdd"
             android:src="@drawable/ic_touch_app_black"
             android:background="@color/colorPrimary"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:layout_weight="1"
+            android:layout_margin="2dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibPercent"
+            android:src="@drawable/ic_toys_black"
+            android:background="@color/colorPrimary"
+            android:onClick="onClick"
+            android:layout_weight="1"
+            android:layout_margin="2dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ibRandom"
+            android:src="@drawable/ic_gavel_black_24dp"
+            android:background="@color/colorPrimary"
+            android:onClick="onClick"
+            android:layout_weight="1"
+            android:layout_margin="2dp"/>
     </LinearLayout>
 
 </LinearLayout>

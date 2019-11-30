@@ -28,6 +28,11 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
         info = (Info) intent.getSerializableExtra("info");
 
         tvResult = (TextView) findViewById(R.id.tvResult);
+        if (info.getTitle().isEmpty() || info.getTitle().equals(" ")) {
+
+        } else {
+            strResult += "\n<" + info.getTitle() + ">";
+        }
 
         if (info.getContent().size() == 0) {
             tvResult.setText("결제내역을 추가하세요");
@@ -104,16 +109,14 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
                 n1 = n1 - n1 % 100;
             }
 
-            strResult += (i + 1) + "=> 결제자:"+sendPerson[i]+" 금액:"+sendMoney[i]+" 참여자수:"+attendCnt[i]+"\n";
+            strResult += "\n"+(i + 1) + "\n[결제자: " + sendPerson[i] + "]\n[금액: " + sendMoney[i] + "원]\n[참여자수: " + attendCnt[i] + "명]\n";
             for (int q = 0; q < attendCnt[i]; q++) {
                 if (sendPerson[i].equals(attendPerson[i][q])) {
 
                 } else {
-                    strResult += attendPerson[i][q] + "->" + sendPerson[i] + ":" + n1 + "원\n";
+                    strResult += attendPerson[i][q] + "->" + sendPerson[i] + ": " + n1 + "원\n";
                 }
             }
-
-            strResult += "\n";
         }
         tvResult.setText(strResult);
     }
@@ -133,7 +136,7 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("text/plain");
             intent.putExtra(Intent.EXTRA_SUBJECT, "N분의1");
-            intent.putExtra(Intent.EXTRA_TEXT, "\n"+strResult);
+            intent.putExtra(Intent.EXTRA_TEXT, strResult);
 
             Intent chooser = Intent.createChooser(intent, "공유");
             startActivity(chooser);
@@ -143,8 +146,9 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(getApplicationContext(), Add.class);
-            startActivity(intent);
+            Intent intent = new Intent();
+            intent.putExtra("info", info);
+            setResult(RESULT_OK, intent);
             finish();
         }
 

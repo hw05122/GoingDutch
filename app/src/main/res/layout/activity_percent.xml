@@ -5,12 +5,178 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Percent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="비율에따라 지불금액 나누기"/>
+        android:text="참여자와 금액을 입력하신 후에\n퍼센트를 입력하세요\n(최대 5명까지 가능합니다)"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="참여자"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="띄어쓰기로 여러명을 추가할 수 있습니다."
+                android:id="@+id/etPerson"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="금액"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:id="@+id/etMoney"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원"/>
+
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add_circle_outline_black"
+                android:id="@+id/ibPerson"
+                android:onClick="onClick"
+                android:background="#ffffff"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="%"
+            android:gravity="right"
+            android:id="@+id/et1"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="%"
+            android:gravity="right"
+            android:id="@+id/et2"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="%"
+            android:gravity="right"
+            android:id="@+id/et3"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="%"
+            android:gravity="right"
+            android:id="@+id/et4"
+            android:visibility="gone"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="%"
+            android:gravity="right"
+            android:id="@+id/et5"
+            android:visibility="gone"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:background="@color/colorPrimary"
+            android:id="@+id/btnOk"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv2"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv3"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv4"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv5"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="20sp"/>
+    </LinearLayout>
 
 </LinearLayout>

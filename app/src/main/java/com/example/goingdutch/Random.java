@@ -44,28 +44,38 @@ public class Random extends AppCompatActivity implements View.OnClickListener {
         if (view == btnOne) {
             llOne.setVisibility(View.INVISIBLE);
 
-            AlertDialog.Builder starB = new AlertDialog.Builder(Random.this);
-            starB.setTitle("      한 사람을 고르고 있는 중입니다.");
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View root = inflater.inflate(R.layout.progress, null);
-            starB.setView(root);
-            starB.setCancelable(false);
-            final AlertDialog adB = starB.create();
-            adB.show();
-
             final String[] person = new String[50];
             int cnt = 0;
+            boolean chk = true;
+
+            if (etPerson.getText().toString().isEmpty()|| etPerson.getText().toString().equals(" ")) {
+                Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                chk = false;
+            }
+
 
             StringTokenizer tokenizer = new StringTokenizer(etPerson.getText().toString(), " ");
             while (tokenizer.hasMoreTokens()) {
                 String str = tokenizer.nextToken();
+                for (int i = 0; person[i] != null; i++) {
+                    if (person[i].equals(str)) {
+                        Toast.makeText(getApplicationContext(), "같은 이름이 존재합니다.", Toast.LENGTH_SHORT).show();
+                        chk = false;
+                    }
+                }
                 person[cnt++] = str;
             }
 
-            if (cnt == 0) {
-                Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
-                adB.dismiss();
-            } else {
+            if (chk) {
+                AlertDialog.Builder starB = new AlertDialog.Builder(Random.this);
+                starB.setTitle("한 사람을 고르고 있는 중입니다.");
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                View root = inflater.inflate(R.layout.progress, null);
+                starB.setView(root);
+                starB.setCancelable(false);
+                final AlertDialog adB = starB.create();
+                adB.show();
+
                 final int CNT = cnt;
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -77,6 +87,7 @@ public class Random extends AppCompatActivity implements View.OnClickListener {
                         llOne.setVisibility(View.VISIBLE);
                     }
                 }, 3000);
+
             }
         }
     }

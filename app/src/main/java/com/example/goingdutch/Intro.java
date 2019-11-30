@@ -16,7 +16,7 @@ public class Intro extends AppCompatActivity {
 
         Handler handler = new Handler(){
             public void handleMessage(Message msg){
-                Intent intent = new Intent(getApplicationContext(), Main.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
                 finish();
             }

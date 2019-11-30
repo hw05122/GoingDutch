@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class Main extends AppCompatActivity implements View.OnClickListener{
     double initTime;
-    ImageButton ibAdd;
+    ImageButton ibAdd,ibPercent, ibRandom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +23,25 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
 
         ibAdd = (ImageButton)findViewById(R.id.ibAdd);
         ibAdd.setOnClickListener(this);
+
+        ibPercent = (ImageButton)findViewById(R.id.ibPercent);
+        ibPercent.setOnClickListener(this);
+
+        ibRandom = (ImageButton)findViewById(R.id.ibRandom);
+        ibRandom.setOnClickListener(this);
     }
 
     public void onClick(View view) {
         if(view == ibAdd){
             Intent intent = new Intent(getApplicationContext(),Add.class);
+            startActivity(intent);
+            finish();
+        }else if(view ==ibPercent){
+            Intent intent = new Intent(getApplicationContext(),Percent.class);
+            startActivity(intent);
+            finish();
+        }else if(view == ibRandom){
+            Intent intent = new Intent(getApplicationContext(),Random.class);
             startActivity(intent);
             finish();
         }
@@ -47,13 +61,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.itemPercent){
-            Intent intent = new Intent(getApplicationContext(),Percent.class);
-            startActivity(intent);
-            finish();
-        }
-        else if(id == R.id.itemRandom){
-            Intent intent = new Intent(getApplicationContext(),Random.class);
+        if(id == R.id.itemLogout){
+            Intent intent = new Intent(getApplicationContext(),Login.class);
             startActivity(intent);
             finish();
         }
@@ -65,13 +74,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener{
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
             if(System.currentTimeMillis() - initTime > 3000){
-                Toast.makeText(getApplicationContext(),"종료하려면 한 번 더 눌러주세요",Toast.LENGTH_SHORT).show();
-                initTime = System.currentTimeMillis();
-                return true;
-            }
-            else{
-                finish();
-                return true;
+                Toast.makeText(getApplicationContext(),"상단의 로그아웃 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
             }
         }
 
