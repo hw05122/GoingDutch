@@ -413,7 +413,7 @@ public class Percent extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(getApplicationContext(), Main.class);
+            Intent intent = new Intent(getApplicationContext(), MainFree.class);
             startActivity(intent);
             finish();
         }

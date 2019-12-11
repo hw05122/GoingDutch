@@ -1,16 +1,23 @@
 package com.example.goingdutch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.math.MathUtils;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class Result extends AppCompatActivity implements View.OnClickListener {
@@ -19,10 +26,15 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
     String strResult = "";
     Info info;
 
+    MyDBHelper myDBHelper;
+    SQLiteDatabase sqlDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        myDBHelper = new MyDBHelper(this);
 
         Intent intent = getIntent();
         info = (Info) intent.getSerializableExtra("info");
@@ -109,7 +121,7 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
                 n1 = n1 - n1 % 100;
             }
 
-            strResult += "\n"+(i + 1) + "\n[결제자: " + sendPerson[i] + "]\n[금액: " + sendMoney[i] + "원]\n[참여자수: " + attendCnt[i] + "명]\n";
+            strResult += "\n" + (i + 1) + "\n[결제자: " + sendPerson[i] + "]\n[금액: " + sendMoney[i] + "원]\n[참여자수: " + attendCnt[i] + "명]\n";
             for (int q = 0; q < attendCnt[i]; q++) {
                 if (sendPerson[i].equals(attendPerson[i][q])) {
 
@@ -123,9 +135,38 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
 
     public void onClick(View view) {
         if (view == btnOk) {
-            Intent intent = new Intent(getApplicationContext(), Main.class);
-            startActivity(intent);
-            finish();
+            if (Login.loginChk) {
+                String id = Login.etId.getText().toString();
+                String title = "";
+                String attendance = info.getList();
+                if (info.getTitle().isEmpty() || info.getTitle().equals(" ")) {
+                    long now = System.currentTimeMillis();
+                    final Date date = new Date(now);
+
+                    final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
+                    final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
+                    final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
+                    String TODAY = curYearFormat.format(date) + curMonthFormat.format(date) + curDayFormat.format(date);
+                    title = TODAY;
+                } else {
+                    title = info.getTitle();
+                }
+
+                ArrayList<String> content = info.getContent();
+
+                sqlDB = myDBHelper.getWritableDatabase();
+                sqlDB.execSQL("INSERT INTO CONTENT VALUES ('" + id + "' , '" + title + "' , '" + attendance + "', '" + content + "');");
+                sqlDB.close();
+
+                Intent intent = new Intent(getApplicationContext(), Main.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), MainFree.class);
+                startActivity(intent);
+                finish();
+            }
+
         } else if (view == btnBack) {
             Intent intent = new Intent();
             intent.putExtra("info", info);
@@ -143,6 +184,7 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -153,5 +195,22 @@ public class Result extends AppCompatActivity implements View.OnClickListener {
         }
 
         return false;
+    }
+
+    public class MyDBHelper extends SQLiteOpenHelper {
+        public MyDBHelper(Context context) {
+            super(context, "GoingDutch2", null, 1);//디비생성
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL("CREATE TABLE CONTENT (userId CHAR(20), title CHAR(20), attendance CHAR(30), content CHAR(100));");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS CONTENT");//존재하면 테이블 삭제
+            onCreate(db);
+        }
     }
 }

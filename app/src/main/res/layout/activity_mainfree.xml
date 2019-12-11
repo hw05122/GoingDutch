@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main"
+    tools:context=".MainFree"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -14,12 +14,10 @@
         android:layout_weight="1"
         android:gravity="center">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/lvContent"
-            android:divider="#d1d1d1"
-            android:dividerHeight="5dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/goingdutch"/>
 
     </LinearLayout>
 
@@ -69,4 +67,5 @@
             android:layout_weight="1"
             android:layout_margin="2dp"/>
     </LinearLayout>
+
 </LinearLayout>

@@ -8,7 +8,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Main"></activity>
+        <activity android:name=".Setting" />
+        <activity android:name=".Register" />
+        <activity android:name=".Login" />
         <activity android:name=".Result" />
         <activity
             android:name=".Add"
@@ -22,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main" />
+        <activity android:name=".MainFree" />
     </application>
 
 </manifest>

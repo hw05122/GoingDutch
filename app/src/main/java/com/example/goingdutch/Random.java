@@ -3,12 +3,9 @@ package com.example.goingdutch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +92,7 @@ public class Random extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(getApplicationContext(), Main.class);
+            Intent intent = new Intent(getApplicationContext(), MainFree.class);
             startActivity(intent);
             finish();
         }

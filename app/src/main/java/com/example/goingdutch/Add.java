@@ -4,8 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -18,16 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Add extends AppCompatActivity implements View.OnClickListener {
@@ -39,14 +38,32 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
     ListView lvList;
     public static int moneySelect;
 
+    MyDBHelper myDBHelper;
+    SQLiteDatabase sqlDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        myDBHelper = new MyDBHelper(this);
+
         content = new ArrayList<>();
         list = new ArrayList<>();
-        list.add("나");
+        if (Login.loginChk == true) {
+            sqlDB = myDBHelper.getReadableDatabase();
+            Cursor cursor;
+            cursor = sqlDB.rawQuery("SELECT * FROM USER;", null);
+
+            while (cursor.moveToNext()) {
+                if (cursor.getString(1).equals(Login.etId.getText().toString())) {
+                    list.add(cursor.getString(0));
+                }
+            }
+            sqlDB.close();
+        } else {
+            list.add("나");
+        }
 
         etTitle = (EditText) findViewById(R.id.etTitle);
         etPerson = (EditText) findViewById(R.id.etPerson);
@@ -112,7 +129,20 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
             } else {
                 Toast.makeText(getApplicationContext(), "참여자를 추가하였습니다.", Toast.LENGTH_SHORT).show();
                 list = new ArrayList<String>();
-                list.add("나");
+
+                if (Login.loginChk == true) {
+                    sqlDB = myDBHelper.getReadableDatabase();
+                    Cursor cursor;
+                    cursor = sqlDB.rawQuery("SELECT * FROM USER;", null);
+
+                    while (cursor.moveToNext()) {
+                        if (cursor.getString(1).equals(Login.etId.getText().toString())) {
+                            list.add(cursor.getString(0));
+                        }
+                    }
+                } else {
+                    list.add("나");
+                }
                 personList();
             }
         } else if (view == ibAdd) {
@@ -324,7 +354,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
             etTitle.setText(info.getTitle());
             etPerson.setText(info.getList());
             content.clear();
-            for(int i=0;i<info.getContent().size();i++){
+            for (int i = 0; i < info.getContent().size(); i++) {
                 content.add(info.getContent().get(i));
             }
         }
@@ -335,11 +365,34 @@ public class Add extends AppCompatActivity implements View.OnClickListener {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(getApplicationContext(), Main.class);
-            startActivity(intent);
-            finish();
+            if (Login.loginChk) {
+                Intent intent = new Intent(getApplicationContext(), Main.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), MainFree.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         return false;
+    }
+
+    public class MyDBHelper extends SQLiteOpenHelper {
+        public MyDBHelper(Context context) {
+            super(context, "GoingDutch", null, 1);//디비생성
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL("CREATE TABLE USER (userName CHAR(20), userId CHAR(20) PRIMARY KEY, userPassword CHAR(20));");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS USER");//존재하면 테이블 삭제
+            onCreate(db);
+        }
     }
 }
